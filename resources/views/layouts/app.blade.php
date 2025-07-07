@@ -131,6 +131,17 @@
           
             </div>
           </div>
+          <form method="POST" action="{{ route('logout') }}">
+    @csrf
+    <button type="submit" class="nav-item nav-link text-danger" style="background: none; border: none;">
+        <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+    </button>
+</form>
+
+          <li class="nav-item">
+     
+           
+</li>
           
        
     </nav>
