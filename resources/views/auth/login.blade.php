@@ -7,7 +7,7 @@
 
         <!-- Email Address -->
         <div>
-            <x-input-label for="email" :value="__('Email')" />
+            <x-input-label for="email" :value="__('Ingrese su Correo Electonico')" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
@@ -40,8 +40,16 @@
             @endif
 
             <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
+                {{ __('Ingresar vv') }}
+            </x-primary-button> <br>
+           
         </div>
     </form>
+
+    <!-- Aquí agregamos el botón o enlace para registrarse -->
+    <div class="mt-6 text-center">
+        <a href="{{ route('register') }}" class="inline-block px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition">
+            {{ __('Crear cuenta') }}
+        </a>
+    </div>
 </x-guest-layout>

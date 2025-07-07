@@ -11,7 +11,8 @@ class ZonaRiesgoController extends Controller
      */
     public function index()
     {
-        //
+        //Ver la lista 
+         return view('zonasRiesgo.index'); 
     }
 
     /**
