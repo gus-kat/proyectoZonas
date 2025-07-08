@@ -58,8 +58,10 @@ class ZonaRiesgoController extends Controller
 
     // Asumiendo que tienes modelo ZonaRiesgo con fillable correcto
     ZonasRiesgo::create($request->all());
+    return redirect()->route('zonasRiesgo.index')->with('mensaje', 'Zona de riesgo creada correctamente.')->with('tipo', 'success');
 
-    return redirect()->route('zonasRiesgo.index')->with('mensaje', 'Zona de riesgo creada correctamente.');
+
+   
 
     }
 
@@ -116,8 +118,7 @@ class ZonaRiesgoController extends Controller
         $zona->longitud4 = $request->longitud4;
 
         $zona->save();
-
-        return redirect()->route('zonasRiesgo.index')->with('success', 'Zona de riesgo actualizada correctamente');
+        return redirect()->route('zonasRiesgo.index')->with('mensaje', 'Zona de riesgo actualizada correctamente')->with('tipo', 'success');
     }
 
     /**
@@ -127,12 +128,14 @@ class ZonaRiesgoController extends Controller
     {
         //
         if (auth()->user()->rol !== 'administrador') {
-        return redirect()->route('zonasRiesgo.index')->with('success', 'No tienes permisos para eliminar zonas de riesgo.');
+            return redirect()->route('zonasRiesgo.index')->with('mensaje', 'No tienes permisos para eliminar zonas de riesgo')->with('tipo', 'error');
+       
         }
 
         $zona = ZonasRiesgo::findOrFail($id);
         $zona->delete();
+        return redirect()->route('zonasRiesgo.index')->with('mensaje', 'Zona de riesgo eliminada correctamente')->with('tipo', 'success');
 
-        return redirect()->route('zonasRiesgo.index')->with('success', 'Zona de riesgo eliminada correctamente.');
+
     }
 }
