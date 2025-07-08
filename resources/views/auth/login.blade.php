@@ -33,26 +33,19 @@
                 <span class="ms-2 text-sm text-gray-600">{{ __('Recordar') }}</span>
             </label>
         </div>
-    <div class="mt-4 flex flex-col items-end space-y-2">
-        @if (Route::has('password.request'))
-            <a href="{{ route('password.request') }}" 
-            class="underline text-sm text-gray-600 hover:text-gray-900 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                {{ __('¿Olvidaste tu contraseña?') }}
-            </a>
-        @endif
-
-        <x-primary-button class="bg-blue-600 hover:bg-blue-700 focus:ring-blue-500">
-            {{ __('Ingresar') }}
-        </x-primary-button>
-    </div>
-
-    <!-- Botón Crear cuenta centrado -->
-    <div class="mt-6 text-center">
+   
+    <div class="mt-6 flex justify-center space-x-4">
         <a href="{{ route('register') }}" 
         class="inline-block px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition">
             {{ __('Crear cuenta') }}
-        </a>
+        </a> <br>
+        <x-primary-button class="bg-blue-600 hover:bg-blue-700 focus:ring-blue-500">
+            {{ __('Ingresar') }}
+        </x-primary-button>
+
+        
     </div>
+
 
     @if(session('mensaje'))
     <script>

@@ -132,10 +132,25 @@
             </div>
           </div>
           <form method="POST" action="{{ route('logout') }}">
-    @csrf
-    <button type="submit" class="nav-item nav-link text-danger" style="background: none; border: none;">
-        <i class="fas fa-sign-out-alt"></i> Cerrar sesión
-    </button>
+   @if(Auth::check())
+        <div class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle d-flex align-items-center gap-2" data-bs-toggle="dropdown">
+                <i class="fas fa-user-circle fa-lg"></i>
+                <span>{{ Auth::user()->name }} ({{ Auth::user()->role ?? 'Sin rol' }})</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-end rounded-0 rounded-bottom m-0">
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="dropdown-item text-danger">
+                        <i class="fas fa-sign-out-alt me-2"></i> Cerrar sesión
+                    </button>
+                </form>
+            </div>
+        </div>
+    @endif
+
+
+
 </form>
 
           <li class="nav-item">
