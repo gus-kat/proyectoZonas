@@ -268,15 +268,16 @@
     }
 </style>
 
-  @if(session('mensaje'))
-      <script>
-          Swal.fire({
-              title: "Confirmación",
-              text: "{{ session('mensaje') }}",
-              icon: "success"
-          });
-      </script>
-  @endif
+ @if(session('mensaje'))
+  <script>
+      Swal.fire({
+          title: "Notificación",
+          text: "{{ session('mensaje') }}",
+          icon: "{{ session('tipo') ?? 'success' }}"
+      });
+  </script>
+@endif
+
 
 
 
