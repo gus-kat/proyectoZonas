@@ -5,7 +5,7 @@
     let zonas = @json($zonas);
 </script>
 
-<h2 class="text-center">Mapa de Zonas de Riesgo</h2>
+<h2 class="text-center">Mapa Global de Zonas</h2>
 <div class="row">
     <div class="col-md-12">
         <div id="mapa-poligono" style="height:600px; width:100%; border:2px solid blue;"></div>

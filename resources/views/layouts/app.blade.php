@@ -124,15 +124,18 @@
           <a href=" {{route ('zonasRiesgo.index')}}" style="color:blue" class="nav-item nav-link active ">Inicio</a>
         
           <div class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle"  data-bs-toggle="dropdown">Puntos de vuelo</a>
+            <a href="#" class="nav-link dropdown-toggle"  data-bs-toggle="dropdown">Zonas de Riesgo</a>
             <div class="dropdown-menu rounded-0 rounded-bottom m-0">
-              <a href=" #" class="dropdown-item">Ver Puntos de Vuelo</a>
-              <a href=" #" class="dropdown-item">Agregar punto de Vuelo</a>
-              <a href="{{ route('zonasRiesgo.mapa') }}">Ver Mapa</a>
+              <a href=" {{ route('zonasRiesgo.index') }}" class="dropdown-item">Ver zonas de Riesgo</a>
+              <a href=" {{ route('zonasRiesgo.create') }}" class="dropdown-item">Agregar zona de Riesgo</a>
+          
 
           
             </div>
+
+          
           </div>
+          <a href=" {{ route('zonasRiesgo.mapa') }}" style="color:blue" class="nav-item nav-link active ">Ver Mapa</a>
           <form method="POST" action="{{ route('logout') }}">
    @if(Auth::check())
         <div class="nav-item dropdown">
