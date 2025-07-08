@@ -8,10 +8,18 @@ class ZonasRiesgo extends Model
 {
     //c
     use HasFactory;
-    protected $fillable=[
+    protected $fillable = [
         'nombre',
         'descripcion',
-        'nivelRiego',
-        'latitud', 'longitud',
+        'nivelRiesgo',
+        'latitud1',
+        'longitud1',
+        'latitud2',
+        'longitud2',
+        'latitud3',
+        'longitud3',
+        'latitud4',
+        'longitud4',
     ];
+
 }

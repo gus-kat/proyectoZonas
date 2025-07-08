@@ -128,6 +128,8 @@
             <div class="dropdown-menu rounded-0 rounded-bottom m-0">
               <a href=" #" class="dropdown-item">Ver Puntos de Vuelo</a>
               <a href=" #" class="dropdown-item">Agregar punto de Vuelo</a>
+              <a href="{{ route('zonasRiesgo.mapa') }}">Ver Mapa</a>
+
           
             </div>
           </div>
