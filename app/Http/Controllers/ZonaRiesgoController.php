@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\ZonasRiesgo;
 
 class ZonaRiesgoController extends Controller
 {
@@ -12,7 +13,10 @@ class ZonaRiesgoController extends Controller
     public function index()
     {
         //Ver la lista 
-         return view('zonasRiesgo.index'); 
+        $zonas=ZonasRiesgo::all();
+        //Renderizar la vista y pasan los datos 
+        return view('zonasRiesgo.index',compact('zonas'));
+        
     }
 
     /**
@@ -21,6 +25,9 @@ class ZonaRiesgoController extends Controller
     public function create()
     {
         //
+        $zonas = ZonaRiesgo::all(); // Asegúrate que este modelo existe y esté importado
+        return view('zonasRiesgo.create', compact('zonas'));
+         
     }
 
     /**
