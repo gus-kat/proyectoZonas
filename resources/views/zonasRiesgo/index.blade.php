@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('contenido')
+<<<<<<< HEAD
 
 <div class="row">
     <div class="col-md-1"></div>
@@ -69,4 +70,7 @@
         });
     });
 </script>
+=======
+<h1>AQUI ESTRAN LAS ZONAS DE RIESGO yayay </h1>
+>>>>>>> f1d85acb508dfa1fb54569dcd2df6223bb85df7d
 @endsection
