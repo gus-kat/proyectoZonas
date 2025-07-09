@@ -22,7 +22,7 @@ class zonasSegurasController extends Controller
      */
     public function create()
     {
-        //
+        return view('zonasSeguras.create');
     }
 
     /**
@@ -30,7 +30,17 @@ class zonasSegurasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $datos = [
+            'nombre' => $request->nombre,
+            'radio' => $request->radio,
+            'latitud' => $request->latitud,
+            'longitud' => $request->longitud,
+            'tipo' => $request->tipo
+        ];
+
+        zonasSeguras::create($datos);
+        return redirect()->route('zonasSeguras.index')->with('message', 'Zona segura creada exitosamente');
     }
 
     /**
