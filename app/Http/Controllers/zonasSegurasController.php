@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\zonasSeguras;
 
 class zonasSegurasController extends Controller
 {
@@ -11,7 +12,9 @@ class zonasSegurasController extends Controller
      */
     public function index()
     {
-        //
+        $zonas = zonasSeguras::all();
+        return view('zonasSeguras.index', compact('zonas'));
+        
     }
 
     /**
