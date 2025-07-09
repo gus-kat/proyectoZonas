@@ -16,7 +16,7 @@
             <label><b>Nombre de la Zona:</b></label>
             <input type="text" name="nombre" id="nombre" placeholder="Ingrese el nombre..." required class="form-control"><br>
 
-            <label><b>Descripción:</b></label>
+            <label><b>Descripción gogo:</b></label>
             <textarea name="descripcion" id="descripcion" rows="3" placeholder="Describa la zona..." class="form-control"></textarea><br>
 
             <label><b>Nivel de Riesgo:</b></label>
