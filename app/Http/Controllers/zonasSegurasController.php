@@ -22,7 +22,7 @@ class zonasSegurasController extends Controller
      */
     public function create()
     {
-        return view('zonasSeguras.create');
+        return view('zonasSeguras.nuevo');
     }
 
     /**
