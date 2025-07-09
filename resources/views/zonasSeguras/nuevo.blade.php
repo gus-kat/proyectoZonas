@@ -13,21 +13,21 @@
         <label for="">Radio</label><br>
         <input type="number" name="radio" id="radio" class="form-control" placeholder="Ej. 50"><br>
 
-        <label for="">Tipo de Seguridad</label><br>
+        <label for="">Nivel de Seguridad</label><br>
         <select name="tipo" id="tipo" class="form-control">
             <option value="Bajo">Bajo</option>
             <option value="Medio">Medio</option>
             <option value="Alto">Alto</option>
         </select><br>
 
-        <div class="row">
+        <div class="row" id="coordenadas">
             <div class="col-md-6">
                 <label>Latitud</label>
-                <input type="text" name="latitud" id="latitud" class="form-control" readonly>
+                <input type="text" name="latitud" id="latitud" class="form-control" value="" readonly>
             </div>
             <div class="col-md-6">
                 <label>Longitud</label>
-                <input type="text" name="longitud" id="longitud" class="form-control" readonly>
+                <input type="text" name="longitud" id="longitud" class="form-control" value="" readonly>
             </div>
         </div><br>
 
@@ -58,8 +58,10 @@
 
     <script>
         let mapa;
+
         function initMapZona() {
             const centro = new google.maps.LatLng(-0.9374805, -78.6161327);
+
             mapa = new google.maps.Map(document.getElementById('zona_segura'), {
                 center: centro,
                 zoom: 15,
@@ -73,9 +75,12 @@
                 draggable: true
             });
 
-            marcador.addListener('dragend', function (event) {
-                document.getElementById('latitud').value = this.getPosition().lat();
-                document.getElementById('longitud').value = this.getPosition().lng();
+            marcador.addListener('dragend', function () {
+                const lat = this.getPosition().lat();
+                const lng = this.getPosition().lng();
+
+                document.getElementById('latitud').value = lat;
+                document.getElementById('longitud').value = lng;
             });
         }
 
@@ -83,6 +88,7 @@
             const radio = parseFloat(document.getElementById('radio').value);
             const lat = parseFloat(document.getElementById('latitud').value);
             const lng = parseFloat(document.getElementById('longitud').value);
+            const tipo = document.getElementById('tipo').value;
 
             const centro = new google.maps.LatLng(lat, lng);
             const mapaGrafico = new google.maps.Map(document.getElementById('mapa-circulo-zona'), {
@@ -97,11 +103,26 @@
                 title: "Centro"
             });
 
+            let colorFill;
+            switch (tipo) {
+                case 'Bajo':
+                    colorFill = "#44FF44"; // Verde claro
+                    break;
+                case 'Medio':
+                    colorFill = "#FFB800"; // Amarillo fuerte
+                    break;
+                case 'Alto':
+                    colorFill = "#FF3333"; // Rojo alerta
+                    break;
+                default:
+                    colorFill = "#999999"; // Neutro
+            }
+
             new google.maps.Circle({
-                strokeColor: "black",
+                strokeColor: "#000000",
                 strokeOpacity: 0.8,
                 strokeWeight: 2,
-                fillColor: "green",
+                fillColor: colorFill,
                 fillOpacity: 0.4,
                 map: mapaGrafico,
                 center: centro,
@@ -111,8 +132,8 @@
     </script>
 
 </div>
+
+<!-- Google Maps API -->
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuXfFTd694L_jf7x67Z5kAuv4IbtHnfFs&callback=initMapZona"></script>
-
-
 
 @endsection
