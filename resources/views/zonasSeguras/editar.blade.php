@@ -14,7 +14,7 @@
         <label for="">Radio</label><br>
         <input type="number" name="radio" id="radio" class="form-control" value="{{ $zona->radio }}"><br>
 
-        <label for="">Tipo de Seguridad</label><br>
+        <label for="">Nivel de Seguridad</label><br>
         <select name="tipo" id="tipo" class="form-control">
             <option value="Baja" {{ $zona->tipo == 'Baja' ? 'selected' : '' }}>Baja</option>
             <option value="Media" {{ $zona->tipo == 'Media' ? 'selected' : '' }}>Media</option>
@@ -41,8 +41,22 @@
     <script>
         let mapa, marcador, circulo;
 
+        function getColorPorNivel(nivel) {
+            switch (nivel) {
+                case 'Baja': return "#44FF44";  // Verde
+                case 'Media': return "#FFB800"; // Amarillo
+                case 'Alta': return "#FF3333";  // Rojo
+                default: return "#999999";     // Gris neutro
+            }
+        }
+
         function initMapZonaEditar() {
-            const centro = new google.maps.LatLng({{ $zona->latitud }}, {{ $zona->longitud }});
+            const lat = parseFloat(document.getElementById('latitud').value);
+            const lng = parseFloat(document.getElementById('longitud').value);
+            const radio = parseFloat(document.getElementById('radio').value);
+            const tipo = document.getElementById('tipo').value;
+
+            const centro = new google.maps.LatLng(lat, lng);
 
             mapa = new google.maps.Map(document.getElementById('mapa_editar_zona'), {
                 center: centro,
@@ -57,38 +71,40 @@
                 draggable: true
             });
 
-            // Dibuja el círculo inicial
             circulo = new google.maps.Circle({
-                strokeColor: "black",
+                strokeColor: "#000000",
                 strokeOpacity: 0.8,
                 strokeWeight: 2,
-                fillColor: "green",
+                fillColor: getColorPorNivel(tipo),
                 fillOpacity: 0.4,
                 map: mapa,
                 center: centro,
-                radius: parseFloat(document.getElementById('radio').value)
+                radius: radio
             });
 
-            // Actualiza coordenadas y círculo al mover marcador
+            // Actualiza coordenadas y centro del círculo al mover marcador
             marcador.addListener('dragend', function () {
-                const lat = this.getPosition().lat();
-                const lng = this.getPosition().lng();
-                document.getElementById('latitud').value = lat;
-                document.getElementById('longitud').value = lng;
-                circulo.setCenter(this.getPosition());
+                const nuevaPos = this.getPosition();
+                document.getElementById('latitud').value = nuevaPos.lat();
+                document.getElementById('longitud').value = nuevaPos.lng();
+                circulo.setCenter(nuevaPos);
             });
 
             // Actualiza radio del círculo en tiempo real
             document.getElementById('radio').addEventListener('input', function () {
-                const nuevoRadio = parseFloat(this.value);
-                circulo.setRadius(nuevoRadio);
+                circulo.setRadius(parseFloat(this.value));
+            });
+
+            // Actualiza color del círculo según tipo
+            document.getElementById('tipo').addEventListener('change', function () {
+                const nuevoColor = getColorPorNivel(this.value);
+                circulo.setOptions({ fillColor: nuevoColor });
             });
         }
     </script>
 
 </div>
 
-<!-- API de Google Maps -->
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuXfFTd694L_jf7x67Z5kAuv4IbtHnfFs&callback=initMapZonaEditar"></script>
 
 @endsection
