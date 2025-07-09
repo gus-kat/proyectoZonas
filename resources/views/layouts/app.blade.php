@@ -133,7 +133,7 @@
             </div>
             <div class="px-3 py-2">
               <h6 class="dropdown-header">Zonas Seguras</h6>
-              <a href="#" class="dropdown-item">Ver zonas</a>
+              <a href="{{ route('zonasSeguras.index') }}" class="dropdown-item">Ver zonas</a>
               <a href="#" class="dropdown-item">Agregar zona</a>
             </div>
           </div>
