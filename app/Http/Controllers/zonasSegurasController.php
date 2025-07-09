@@ -48,7 +48,8 @@ class zonasSegurasController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $zona = zonasSeguras::findOrFail($id);
+        return view('zonasSeguras.show', compact('zona'));
     }
 
     /**
@@ -56,7 +57,8 @@ class zonasSegurasController extends Controller
      */
     public function edit(string $id)
     {
-        //
+         $zona = zonasSeguras::findOrFail($id);
+        return view('zonasSeguras.edit', compact('zona'));
     }
 
     /**
@@ -64,7 +66,17 @@ class zonasSegurasController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+         $zona = zonasSeguras::findOrFail($id);
+        $zona->update([
+            'nombre' => $request->nombre,
+            'radio' => $request->radio,
+            'latitud' => $request->latitud,
+            'longitud' => $request->longitud,
+            'tipo' => $request->tipo
+        ]);
+
+        return redirect()->route('zonasSeguras.index')->with('message', 'Zona segura actualizada correctamente');
+    
     }
 
     /**
@@ -72,6 +84,10 @@ class zonasSegurasController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+
+        $zona = zonasSeguras::findOrFail($id);
+        $zona->delete();
+        return redirect()->route('zonasSeguras.index')->with('message', 'Zona segura eliminada');
+    
     }
 }
