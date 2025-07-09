@@ -127,7 +127,7 @@ class ZonaRiesgoController extends Controller
     public function destroy(string $id)
     {
         //
-        if (auth()->user()->role !== 'administrador') {
+        if (auth()->user()->role !== 'Administrador') {
             return redirect()->route('zonasRiesgo.index')->with('mensaje', 'No tienes permisos para eliminar zonas de riesgo')->with('tipo', 'error');
        
         }
