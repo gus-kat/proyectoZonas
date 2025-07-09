@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('zonas_seguras', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre');
+            $table->float('radio');
+            $table->double('latitud');   
+            $table->double('longitud');  
+            $table->string('tipo');
             $table->timestamps();
         });
     }
