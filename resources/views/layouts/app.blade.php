@@ -123,20 +123,28 @@
         <div class="navbar-nav ms-auto">
           <a href=" {{route ('zonasRiesgo.index')}}" style="color:blue" class="nav-item nav-link active ">Inicio</a>
         
-          <div class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle"  data-bs-toggle="dropdown">Zonas de Riesgo</a>
-            <div class="dropdown-menu rounded-0 rounded-bottom m-0">
-              <a href=" {{ route('zonasRiesgo.index') }}" class="dropdown-item">Ver zonas de Riesgo</a>
-              <a href=" {{ route('zonasRiesgo.create') }}" class="dropdown-item">Agregar zona de Riesgo</a>
-          
-
-          
+        <div class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Zonas</a>
+          <div class="dropdown-menu d-flex flex-row p-0">
+            <div class="px-3 py-2 border-end">
+              <h6 class="dropdown-header">Zonas de Riesgo</h6>
+              <a href="{{ route('zonasRiesgo.index') }}" class="dropdown-item">Ver zonas</a>
+              <a href="{{ route('zonasRiesgo.create') }}" class="dropdown-item">Agregar zona</a>
             </div>
+            <div class="px-3 py-2">
+              <h6 class="dropdown-header">Zonas Seguras</h6>
+              <a href="#" class="dropdown-item">Ver zonas</a>
+              <a href="#" class="dropdown-item">Agregar zona</a>
+            </div>
+          </div>
+        </div>
+
 
           
           </div>
           <a href=" {{ route('zonasRiesgo.mapa') }}" style="color:blue" class="nav-item nav-link active ">Ver Mapa</a>
-          <form method="POST" action="{{ route('logout') }}">
+          <form method="POST" action="{{ route('logout') }}" >
+          
    @if(Auth::check())
         <div class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle d-flex align-items-center gap-2" data-bs-toggle="dropdown">
