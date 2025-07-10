@@ -3,26 +3,30 @@
 
 <br><br><br>
 <script>
-    let zonas = @json($zonas);              // Zonas de riesgo
-    let zonasSeguras = @json($zonasSeguras); // Zonas seguras
-    let puntos = @json($puntos);             // Puntos de encuentro
+    let zonas = @json($zonas);
+    let zonasSeguras = @json($zonasSeguras);
+    let puntos = @json($puntos);
 </script>
 
 <h2 class="text-center">Mapa Global de Zonas</h2>
 
-<div class="text-center">
-    <div>
-        <label for="nivelFiltro" class="form-label"><b>Filtrar por nivel:</b></label>
-        <select id="nivelFiltro" class="form-select-center" onchange="filtrarPorNivel()">
-            <option value="todos">Todos</option>
-            <option value="Bajo">Bajo</option>
-            <option value="Medio">Medio</option>
-            <option value="Alto">Alto</option>
-        </select>
-    </div>
+<div class="text-center mb-4">
+    <label for="nivelFiltro" class="form-label"><b>Filtrar por nivel:</b></label>
+    <select id="nivelFiltro" class="form-select-center" onchange="filtrarPorNivel()" style="max-width:250px; margin:auto;">
+        <option value="todos">Todos</option>
+        <option value="Bajo">Bajo</option>
+        <option value="Medio">Medio</option>
+        <option value="Alto">Alto</option>
+    </select>
 </div>
 
-<div class="container"> 
+<div class="text-center mb-3">
+    <button class="btn btn-outline-primary me-2" onclick="imprimirImagenGenerada()">🖨 Imprimir </button>
+    <button class="btn btn-outline-danger me-2" onclick="exportarPDF()">📄 Exportar como PDF</button>
+    <button class="btn btn-outline-success" onclick="descargarImagen()">📷 Descargar Imagen</button>
+</div>
+
+<div class="container">
     <div id="mapa-zonas" style="height:600px; width:100%; border:2px solid blue;"></div>
 </div>
 
@@ -36,7 +40,6 @@
             zoom: 14,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
-
         filtrarPorNivel();
     }
 
@@ -56,10 +59,10 @@
 
     function obtenerColor(nivel) {
         switch (nivel) {
-            case 'Bajo':  return '#44FF44';  // Verde
-            case 'Medio': return '#FFB800';  // Amarillo
-            case 'Alto':  return '#3399FF';  // Azul
-            default:      return '#999999';  // Neutro
+            case 'Bajo': return '#44FF44';
+            case 'Medio': return '#FFB800';
+            case 'Alto': return '#3399FF';
+            default: return '#999999';
         }
     }
 
@@ -67,7 +70,6 @@
         limpiarMapa();
         const nivelFiltro = document.getElementById("nivelFiltro").value;
 
-        //  Zonas de riesgo
         zonas.forEach(z => {
             const nivelZona = normalizarNivel(z.nivelRiesgo || '');
             if (nivelFiltro === 'todos' || nivelZona === nivelFiltro) {
@@ -77,7 +79,6 @@
                     { lat: parseFloat(z.latitud3), lng: parseFloat(z.longitud3) },
                     { lat: parseFloat(z.latitud4), lng: parseFloat(z.longitud4) }
                 ];
-
                 const poligono = new google.maps.Polygon({
                     paths: coords,
                     strokeColor: "#FF0000",
@@ -87,37 +88,29 @@
                     fillOpacity: 0.35,
                     map: mapa
                 });
-
-                const contenidoInfo = `
-                    <div style="max-width: 230px; font-size: 14px;">
-                        <h6 style="font-weight: bold;">Zona de Riesgo</h6>
-                        <p><strong>Nombre:</strong> ${z.nombre || 'Sin nombre'}</p>
-                        <p><strong>Nivel:</strong> ${nivelZona}</p>
-                    </div>
-                `;
-                const infoWindow = new google.maps.InfoWindow({ content: contenidoInfo });
-
+                const infoWindow = new google.maps.InfoWindow({
+                    content: `
+                        <div style="max-width:230px;font-size:14px;">
+                            <h6 style="font-weight:bold;">Zona de Riesgo</h6>
+                            <p><strong>Nombre:</strong> ${z.nombre || 'Sin nombre'}</p>
+                            <p><strong>Nivel:</strong> ${nivelZona}</p>
+                        </div>
+                    `
+                });
                 poligono.addListener('click', () => {
                     infoWindow.setPosition(coords[0]);
                     infoWindow.open(mapa);
                 });
-
                 elementosGraficados.push(poligono);
             }
         });
 
-        //  Zonas seguras
         zonasSeguras.forEach(z => {
             const nivelZona = normalizarNivel(z.tipo || '');
             if (nivelFiltro === 'todos' || nivelZona === nivelFiltro) {
-                const centro = {
-                    lat: parseFloat(z.latitud),
-                    lng: parseFloat(z.longitud)
-                };
-
+                const centro = { lat: parseFloat(z.latitud), lng: parseFloat(z.longitud) };
                 const color = obtenerColor(nivelZona);
                 const radio = parseFloat(z.radio) || 50;
-
                 const circulo = new google.maps.Circle({
                     strokeColor: "#000000",
                     strokeOpacity: 0.8,
@@ -128,63 +121,83 @@
                     center: centro,
                     radius: radio
                 });
-
-                const contenidoInfo = `
-                    <div style="max-width: 230px; font-size: 14px;">
-                        <h6 style="font-weight: bold;">Zona Segura</h6>
-                        <p><strong>Nombre:</strong> ${z.nombre || 'Sin nombre'}</p>
-                        <p><strong>Nivel:</strong> ${nivelZona}</p>
-                        <p><strong>Radio:</strong> ${z.radio}</p>
-                    </div>
-                `;
-                const infoWindow = new google.maps.InfoWindow({ content: contenidoInfo });
-
+                const infoWindow = new google.maps.InfoWindow({
+                    content: `
+                        <div style="max-width:230px;font-size:14px;">
+                            <h6 style="font-weight:bold;">Zona Segura</h6>
+                            <p><strong>Nombre:</strong> ${z.nombre || 'Sin nombre'}</p>
+                            <p><strong>Nivel:</strong> ${nivelZona}</p>
+                            <p><strong>Radio:</strong> ${z.radio}</p>
+                        </div>
+                    `
+                });
                 circulo.addListener('click', () => {
                     infoWindow.setPosition(centro);
                     infoWindow.open(mapa);
                 });
-
                 elementosGraficados.push(circulo);
             }
         });
 
-        //  Puntos de encuentro
         puntos.forEach(p => {
-            const posicion = {
-                lat: parseFloat(p.latitud),
-                lng: parseFloat(p.longitud)
-            };
-
+            const posicion = { lat: parseFloat(p.latitud), lng: parseFloat(p.longitud) };
             const marcador = new google.maps.Marker({
                 position: posicion,
                 map: mapa,
                 title: p.nombre || 'Punto de Encuentro',
                 icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
             });
-
             const imagenHTML = (p.imagen && p.imagen !== 'sin imagen')
                 ? `<div style="text-align:center;">
-                      <img src="/storage/${p.imagen}" alt="Imagen" 
-                           style="width:100%; max-width:160px; height:auto; border-radius:6px; object-fit:cover;">
+                    <img src="/storage/${p.imagen}" alt="Imagen"
+                         style="width:100%;max-width:160px;height:auto;border-radius:6px;object-fit:cover;">
                    </div>`
                 : `<p><em>Sin imagen</em></p>`;
-
-            const contenidoInfo = `
-                <div style="max-width: 250px; font-size: 14px;">
-                    ${imagenHTML}
-                    <h6 style="margin-top: 8px; font-weight: bold;">${p.nombre}</h6>
-                    <p><strong>Capacidad:</strong> ${p.capacidad}</p>
-                    <p><strong>Responsable:</strong> ${p.responsable}</p>
-                </div>
-            `;
-
-            const infoWindow = new google.maps.InfoWindow({ content: contenidoInfo });
-
+            const infoWindow = new google.maps.InfoWindow({
+                content: `
+                    <div style="max-width:250px;font-size:14px;">
+                        ${imagenHTML}
+                        <h6 style="margin-top:8px;font-weight:bold;">${p.nombre}</h6>
+                        <p><strong>Capacidad:</strong> ${p.capacidad}</p>
+                        <p><strong>Responsable:</strong> ${p.responsable}</p>
+                    </div>
+                `
+            });
             marcador.addListener('click', () => {
                 infoWindow.open(mapa, marcador);
             });
-
             elementosGraficados.push(marcador);
+        });
+    }
+
+    function descargarImagen() {
+        html2canvas(document.getElementById('mapa-zonas'), { useCORS: true }).then(canvas => {
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/png');
+            link.download = 'mapa-zonas.png';
+            link.click();
+        });
+    }
+
+    function exportarPDF() {
+        html2canvas(document.getElementById('mapa-zonas'), { useCORS: true }).then(canvas => {
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jspdf.jsPDF('landscape', 'pt', [canvas.width, canvas.height]);
+            pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+            pdf.save("mapa-zonas.pdf");
+        });
+    }
+
+    function imprimirImagenGenerada() {
+        html2canvas(document.getElementById('mapa-zonas'), { useCORS: true }).then(canvas => {
+            const ventana = window.open('', '', 'width=800,height=600');
+            ventana.document.write('<html><head><title>Impresión del Mapa</title></head><body>');
+            ventana.document.write(`<img src="${canvas.toDataURL('image/png')}" style="width:100%;"/>`);
+            ventana.document.write('</body></html>');
+            ventana.document.close();
+            ventana.focus();
+            ventana.print();
+            ventana.close();
         });
     }
 </script>
@@ -192,8 +205,7 @@
 <!-- Google Maps API -->
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuXfFTd694L_jf7x67Z5kAuv4IbtHnfFs&callback=initMap"></script>
 
-<br><br><br>
-@endsection
 
-
-
+<!-- Librerías para captura y PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5
