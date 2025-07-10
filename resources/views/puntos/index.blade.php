@@ -21,6 +21,7 @@
                 <th>acciones</th>
             </tr>
         </thead>
+<!-- -->
         <tbody>
             @foreach($punto as $puntotemp)
             <tr>
