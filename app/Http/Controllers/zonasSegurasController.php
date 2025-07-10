@@ -84,10 +84,15 @@ class zonasSegurasController extends Controller
      */
     public function destroy(string $id)
     {
+        if (auth()->user()->role !== 'Administrador') {
+            return redirect()->route('zonasSeguras.index')->with('mensaje', 'No tienes permisos para eliminar zonas Seguras')->with('tipo', 'error');
+       
+        }
+
 
         $zona = zonasSeguras::findOrFail($id);
         $zona->delete();
-        return redirect()->route('zonasSeguras.index')->with('mesaje', 'Zona segura eliminada');
+        return redirect()->route('zonasSeguras.index')->with('mensaje', 'Zona segura eliminada');
     
     }
 }

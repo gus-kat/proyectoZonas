@@ -111,6 +111,10 @@ class Punto_EncuentroController extends Controller
      */
     public function destroy(string $id)
     {
+        if (auth()->user()->role !== 'Administrador') {
+            return redirect()->route('puntos.index')->with('mensaje', 'No tienes permisos para eliminar zonas Seguras')->with('tipo', 'error');
+       
+        }
         $punto = Punto_Encuentro::findOrFail($id);
 
         if ($punto->imagen && $punto->imagen !== 'sin imagen') {

@@ -32,10 +32,10 @@
                     <td>{{ $zona->tipo }}</td>
                     <td>
                         <a class="btn btn-warning btn-sm" href="{{ route('zonasSeguras.edit', $zona->id) }}">Editar</a>
-                        <form action="{{ route('zonasSeguras.destroy', $zona->id) }}" method="POST" style="display:inline-block;">
+                        <form action="{{ route('zonasSeguras.destroy', $zona->id) }}" method="POST" style="display:inline-block;" class="formEliminar">
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro deseas eliminar esta zona segura?')">Eliminar</button>
+                            <button class="btn btn-danger btn-sm" >Eliminar</button>
                         </form>
                     </td>
                 </tr>
@@ -57,6 +57,32 @@
             }
         });
     });
+</script>
+<!-- Confirmación con SweetAlert -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const formularios = document.querySelectorAll('.formEliminar');
+
+    formularios.forEach(form => {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            Swal.fire({
+                title: "¿Estás seguro?",
+                text: "Una vez eliminado no se puede recuperar",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Sí, eliminar",
+                cancelButtonText: "Cancelar"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit(); 
+                }
+            });
+        });
+    });
+});
 </script>
 <br><br><br>
 @endsection
