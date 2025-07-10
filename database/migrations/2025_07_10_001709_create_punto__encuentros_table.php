@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('punto__encuentros', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre');
+            $table->integer('capacidad');
+            $table->string('responsable');
+            $table->string('imagen')->nullable();
+            $table->decimal('latitud', 10, 7);
+            $table->decimal('longitud', 10, 7);
+
             $table->timestamps();
         });
     }
