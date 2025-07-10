@@ -116,36 +116,40 @@
         <img class="img-fluid me-3"  src="{{ asset('backend/assets/img/icon/icon-10.png') }}" alt="Icon" />
         <h1 class="m-0 text-primary">Vuelos</h1>
       </a>
-                <div class="px-3 py-2 border-end">
-              <h6 class="dropdown-header">Puntos de encuentro</h6>
-              <a href="{{ route('puntos.index') }}" class="dropdown-item">Ver puntos</a>
-              <a href="{{ route('puntos.create') }}" class="dropdown-item">Agregar punto</a>
-            </div>
-      <div class="collapse navbar-collapse py-4 py-lg-0" id="navbarCollapse">
-        <div class="navbar-nav ms-auto">
-          <a href=" {{route ('zonasRiesgo.index')}}" style="color:blue" class="nav-item nav-link active ">Inicio</a>
-        
+       <a href=" {{route ('zonasRiesgo.index')}}" style="color:blue" class="nav-item nav-link active ">Inicio</a>
         <div class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Zonas</a>
-          <div class="dropdown-menu d-flex flex-row p-0">
-            <div class="px-3 py-2 border-end">
-              <h6 class="dropdown-header">Zonas de Riesgo</h6>
-              <a href="{{ route('zonasRiesgo.index') }}" class="dropdown-item">Ver zonas</a>
-              <a href="{{ route('zonasRiesgo.create') }}" class="dropdown-item">Agregar zona</a>
-            </div>
-            <div class="px-3 py-2">
-              <h6 class="dropdown-header">Zonas Seguras</h6>
-              <a href="{{ route('zonasSeguras.index') }}" class="dropdown-item">Ver zonas Seguras</a>
-              <a href="{{ route('zonasSeguras.create') }}" class="dropdown-item">Agregar zona Seguras</a>
-            </div>
-          </div>
+            <a class="nav-link dropdown-toggle px-3 py-2 border-end" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Puntos de encuentro
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="{{ route('puntos.index') }}" class="dropdown-item">Ver puntos</a></li>
+                <li><a href="{{ route('puntos.create') }}" class="dropdown-item">Agregar punto</a></li>
+            </ul>
         </div>
-
-
-          
-      </div>
+        <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle px-3 py-2 border-end" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Zonas de riesgo
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="{{ route('zonasRiesgo.index') }}" class="dropdown-item">Ver lista de zonas de riesgo</a></li>
+                <li><a href="{{ route('zonasRiesgo.create') }}" class="dropdown-item">Agregar zona de riesgo</a></li>
+            </ul>
+        </div>
+        <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle px-3 py-2 border-end" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Zonas seguras
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="{{ route('zonasSeguras.index') }}" class="dropdown-item">Lista de Zonas seguras</a></li>
+                <li><a href="{{ route('zonasSeguras.create') }}" class="dropdown-item">Nueva zona segura</a></li>
+            </ul>
+        </div>
+      </div class=" px-3 py-2 border-end">
           <a href=" {{ route('zonasRiesgo.mapa') }}" style="color:blue" class="nav-item nav-link active ">Ver Mapa</a>
+      </div>
+      <div class="nav-link px-3 py-2 border-end" >
           <form method="POST" action="{{ route('logout') }}" >
+      </div>
           
    @if(Auth::check())
         <div class="nav-item dropdown">

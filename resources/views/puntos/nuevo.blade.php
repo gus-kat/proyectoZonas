@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('contenido')
+<br><br><br>
 <div class="container mt-4">
     <form action="{{ route('puntos.store') }}" id="formNpunto" method="post" enctype="multipart/form-data">
         @csrf
@@ -137,7 +138,7 @@
           min: "El minimo de capacidad 2",
           max: "El maximo de capacidad es 60"
         },
-        Responsable: {
+        responsable: {
           required: "Por favor ingresa al responsable",
           minlength: "El nombre debe tener al menos 4 caracteres",
           maxlength: "El nombre no debe superar los 20 caracteres"
@@ -172,5 +173,5 @@
     });
   </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuXfFTd694L_jf7x67Z5kAuv4IbtHnfFs&callback=initMap"></script>
-
+<br><br><br>
 @endsection

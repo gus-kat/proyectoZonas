@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('contenido')
+<br><br><br>
 <div class="container mt-4"><br>
     
     <a href="{{ route('puntos.create') }}" class="btn btn-primary mb-3">
@@ -29,11 +30,12 @@
                 <td>{{ $puntotemp->responsable }}</td>
                 <td>
                     @if($puntotemp->imagen && $puntotemp->imagen !== 'sin imagen')
-                        <img src="{{ asset('storage/' . $puntotemp->imagen) }}" alt="Imagen Punto" width="100" height="80" style="object-fit: cover;">
+                        <img src="{{ asset('storage/' . $puntotemp->imagen) }}" alt="Imagen Punto" width="100" height="80" style="object-fit: cover; border-radius: 5px;">
                     @else
                         <span>No hay imagen</span>
                     @endif
                 </td>
+
                 <td>{{ $puntotemp->latitud }}</td>
                 <td>{{ $puntotemp->longitud }}</td>
                 <td>
@@ -84,5 +86,5 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 </script>
-
+<br><br><br>
 @endsection

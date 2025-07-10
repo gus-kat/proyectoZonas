@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('contenido')
-
+<br><br><br>
 <script>
     let zonas = @json($zonas);              // Zonas de riesgo
     let zonasSeguras = @json($zonasSeguras); // Zonas seguras
@@ -157,6 +157,6 @@
 <!-- Google Maps API -->
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuXfFTd694L_jf7x67Z5kAuv4IbtHnfFs&callback=initMap"></script>
 
-
+<br><br><br>
 @endsection
 

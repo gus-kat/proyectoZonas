@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('contenido')
+<br><br><br>
 <div class="container mt-4">
     <form action="{{ route('puntos.update', $punto->id) }}" id="formEpuntos" method="post" enctype="multipart/form-data">
         @csrf
@@ -177,5 +178,5 @@
     });
   </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuXfFTd694L_jf7x67Z5kAuv4IbtHnfFs&callback=initMap"></script>
-
+<br><br><br>
 @endsection

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Storage; 
 use Illuminate\Http\Request;
 use App\Models\Punto_Encuentro;
 class Punto_EncuentroController extends Controller

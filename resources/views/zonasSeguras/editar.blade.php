@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('contenido')
-
+<br><br><br>
 <div class="container">
     <h1 class="text-center">Editar Zona Segura</h1>
 
@@ -112,5 +112,5 @@
 
 <!-- Google Maps API -->
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuXfFTd694L_jf7x67Z5kAuv4IbtHnfFs&callback=initMapZona"></script>
-
+<br><br><br>
 @endsection
