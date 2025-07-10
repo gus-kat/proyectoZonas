@@ -8,8 +8,8 @@
     </a>
     <br>
 
-    <table class="table table-bordered table-striped">
-        <thead class="table-dark">
+    <table class="table table-bordered table-striped" id="tbPuntos">
+        <thead >
             <tr>
                 <th>ID</th>
                 <th>NOMBRE</th>
@@ -86,5 +86,28 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 </script>
+<script>
+// Inicializar DataTable
+    $(document).ready(function () {
+      let table = new DataTable('#tbPuntos', {
+        
+        language: {
+          url: 'https://cdn.datatables.net/plug-ins/2.3.1/i18n/es-ES.json'
+        },
+        dom: '<"top d-flex justify-content-between"fB>rtp',
+        dom: "<'d-flex justify-content-between align-items-center mb-3'Bf>rtip",
+        pageLength: 3,
+        
+        buttons: [
+          { extend: 'copy', text: 'Copiar', className: 'btn btn-primary me-2' },
+          { extend: 'csv', text: 'CSV', className: 'btn btn-info me-2' },
+          { extend: 'excel', text: 'Excel', className: 'btn btn-success me-2' },
+          { extend: 'pdf', text: 'PDF', className: 'btn btn-danger me-2' },
+          { extend: 'print', text: 'Imprimir', className: 'btn btn-secondary me-2' }
+        ]
+
+      });
+    });
+  </script>
 <br><br><br>
 @endsection

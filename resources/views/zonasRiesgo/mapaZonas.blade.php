@@ -1,10 +1,11 @@
 @extends('layouts.app')
 @section('contenido')
+
 <br><br><br>
 <script>
     let zonas = @json($zonas);              // Zonas de riesgo
     let zonasSeguras = @json($zonasSeguras); // Zonas seguras
-    let puntos = @json($puntos); 
+    let puntos = @json($puntos);             // Puntos de encuentro
 </script>
 
 <h2 class="text-center">Mapa Global de Zonas</h2>
@@ -20,9 +21,11 @@
         </select>
     </div>
 </div>
+
 <div class="container"> 
     <div id="mapa-zonas" style="height:600px; width:100%; border:2px solid blue;"></div>
 </div>
+
 <script>
     let mapa;
     let elementosGraficados = [];
@@ -43,7 +46,6 @@
     }
 
     function normalizarNivel(valor) {
-        // Convierte 'Baja' a 'Bajo', etc.
         switch (valor.toLowerCase()) {
             case 'baja': return 'Bajo';
             case 'media': return 'Medio';
@@ -54,10 +56,10 @@
 
     function obtenerColor(nivel) {
         switch (nivel) {
-            case 'Bajo':  return '#44FF44'; // Verde
-            case 'Medio': return '#FFB800'; // Amarillo
-            case 'Alto':  return '#3399FF'; // Azul
-            default:      return '#999999'; // Neutro
+            case 'Bajo':  return '#44FF44';  // Verde
+            case 'Medio': return '#FFB800';  // Amarillo
+            case 'Alto':  return '#3399FF';  // Azul
+            default:      return '#999999';  // Neutro
         }
     }
 
@@ -65,6 +67,7 @@
         limpiarMapa();
         const nivelFiltro = document.getElementById("nivelFiltro").value;
 
+        //  Zonas de riesgo
         zonas.forEach(z => {
             const nivelZona = normalizarNivel(z.nivelRiesgo || '');
             if (nivelFiltro === 'todos' || nivelZona === nivelFiltro) {
@@ -85,10 +88,25 @@
                     map: mapa
                 });
 
+                const contenidoInfo = `
+                    <div style="max-width: 230px; font-size: 14px;">
+                        <h6 style="font-weight: bold;">Zona de Riesgo</h6>
+                        <p><strong>Nombre:</strong> ${z.nombre || 'Sin nombre'}</p>
+                        <p><strong>Nivel:</strong> ${nivelZona}</p>
+                    </div>
+                `;
+                const infoWindow = new google.maps.InfoWindow({ content: contenidoInfo });
+
+                poligono.addListener('click', () => {
+                    infoWindow.setPosition(coords[0]);
+                    infoWindow.open(mapa);
+                });
+
                 elementosGraficados.push(poligono);
             }
         });
 
+        //  Zonas seguras
         zonasSeguras.forEach(z => {
             const nivelZona = normalizarNivel(z.tipo || '');
             if (nivelFiltro === 'todos' || nivelZona === nivelFiltro) {
@@ -111,47 +129,64 @@
                     radius: radio
                 });
 
+                const contenidoInfo = `
+                    <div style="max-width: 230px; font-size: 14px;">
+                        <h6 style="font-weight: bold;">Zona Segura</h6>
+                        <p><strong>Nombre:</strong> ${z.nombre || 'Sin nombre'}</p>
+                        <p><strong>Nivel:</strong> ${nivelZona}</p>
+                        <p><strong>Radio:</strong> ${z.radio}</p>
+                    </div>
+                `;
+                const infoWindow = new google.maps.InfoWindow({ content: contenidoInfo });
+
+                circulo.addListener('click', () => {
+                    infoWindow.setPosition(centro);
+                    infoWindow.open(mapa);
+                });
+
                 elementosGraficados.push(circulo);
             }
         });
-        puntos.forEach(p => {
-           const posicion = { lat: parseFloat(p.latitud), lng: parseFloat(p.longitud) };
 
-           const marcador = new google.maps.Marker({
-               position: posicion,
-               map: mapa,
-               title: p.nombre || 'Punto de Encuentro',
-               icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
-           });
-       
-           const imagenHTML = (p.imagen && p.imagen !== 'sin imagen')
-               ? `<div style="text-align:center;">
+        //  Puntos de encuentro
+        puntos.forEach(p => {
+            const posicion = {
+                lat: parseFloat(p.latitud),
+                lng: parseFloat(p.longitud)
+            };
+
+            const marcador = new google.maps.Marker({
+                position: posicion,
+                map: mapa,
+                title: p.nombre || 'Punto de Encuentro',
+                icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+            });
+
+            const imagenHTML = (p.imagen && p.imagen !== 'sin imagen')
+                ? `<div style="text-align:center;">
                       <img src="/storage/${p.imagen}" alt="Imagen" 
                            style="width:100%; max-width:160px; height:auto; border-radius:6px; object-fit:cover;">
-                  </div>`
-               : `<p><em>Sin imagen</em></p>`;
-       
-           const contenidoInfo = `
-               <div style="max-width: 250px; font-size: 14px;">
-                   ${imagenHTML}
-                   <h6 style="margin-top: 8px; font-weight: bold;">${p.nombre}</h6>
-                   <p><strong>Capacidad:</strong> ${p.capacidad}</p>
-                   <p><strong>Responsable:</strong> ${p.responsable}</p>
-               </div>
-           `;
-       
-           const infoWindow = new google.maps.InfoWindow({
-               content: contenidoInfo
-           });
-       
-           marcador.addListener('click', () => {
-               infoWindow.open(mapa, marcador);
-           });
-       
-           elementosGraficados.push(marcador);
-        });
+                   </div>`
+                : `<p><em>Sin imagen</em></p>`;
 
-}
+            const contenidoInfo = `
+                <div style="max-width: 250px; font-size: 14px;">
+                    ${imagenHTML}
+                    <h6 style="margin-top: 8px; font-weight: bold;">${p.nombre}</h6>
+                    <p><strong>Capacidad:</strong> ${p.capacidad}</p>
+                    <p><strong>Responsable:</strong> ${p.responsable}</p>
+                </div>
+            `;
+
+            const infoWindow = new google.maps.InfoWindow({ content: contenidoInfo });
+
+            marcador.addListener('click', () => {
+                infoWindow.open(mapa, marcador);
+            });
+
+            elementosGraficados.push(marcador);
+        });
+    }
 </script>
 
 <!-- Google Maps API -->
@@ -159,4 +194,6 @@
 
 <br><br><br>
 @endsection
+
+
 

@@ -9,7 +9,7 @@
 
         <a class="btn btn-info" href="{{ route('zonasSeguras.create') }}">Agregar Zona Segura</a>  <br><br>
 
-        <table id="tblZnSeguras" class="table table-hover table-bordered table-striped">
+        <table  class="table table-hover table-bordered table-striped" id="tablaZsegura">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -31,11 +31,11 @@
                     <td>{{ $zona->longitud }}</td>
                     <td>{{ $zona->tipo }}</td>
                     <td>
-                        <a class="btn btn-warning btn-sm" href="{{ route('zonasSeguras.edit', $zona->id) }}">Editar</a>
+                        <a class="btn btn-warning btn-sm" href="{{ route('zonasSeguras.edit', $zona->id) }}"><i class="fas fa-edit"></i>Editar</a>
                         <form action="{{ route('zonasSeguras.destroy', $zona->id) }}" method="POST" style="display:inline-block;" class="formEliminar">
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-danger btn-sm" >Eliminar</button>
+                            <button class="btn btn-danger btn-sm" ><i class="fas fa-trash-alt"></i> Eliminar</button>
                         </form>
                     </td>
                 </tr>
@@ -47,17 +47,31 @@
     <div class="col-md-1"></div>
 </div>
 
+
 <script>
+// Inicializar DataTable
     $(document).ready(function () {
-        $('#tblZnSeguras').DataTable({
-            dom: 'Bfrtip',
-            buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-            language: {
-                url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
-            }
-        });
+      let table = new DataTable('#tablaZsegura', {
+        
+        language: {
+          url: 'https://cdn.datatables.net/plug-ins/2.3.1/i18n/es-ES.json'
+        },
+        dom: '<"top d-flex justify-content-between"fB>rtp',
+        dom: "<'d-flex justify-content-between align-items-center mb-3'Bf>rtip",
+        pageLength: 5,
+        
+        buttons: [
+          { extend: 'copy', text: 'Copiar', className: 'btn btn-primary me-2' },
+          { extend: 'csv', text: 'CSV', className: 'btn btn-info me-2' },
+          { extend: 'excel', text: 'Excel', className: 'btn btn-success me-2' },
+          { extend: 'pdf', text: 'PDF', className: 'btn btn-danger me-2' },
+          { extend: 'print', text: 'Imprimir', className: 'btn btn-secondary me-2' }
+        ]
+
+      });
     });
-</script>
+  </script>
+
 <!-- Confirmación con SweetAlert -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {

@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('contenido')
+
 <br><br><br>
 <div class="row">
     <div class="col-md-1"></div>
@@ -7,10 +8,10 @@
 
         <h1 class="text-center">Listado de Zonas de Riesgo</h1>
 
-        <a class="btn btn-warning" href="{{ route('zonasRiesgo.create') }}">Agregar Zona de Riesgo</a>  <br><br>
+        <a class="btn btn-warning mb-3" href="{{ route('zonasRiesgo.create') }}">Agregar Zona de Riesgo</a>
 
-        <table id="tblZnR" class="table table-hover table-bordered table-striped">
-            <thead>
+        <table id="tblZnR" class="table table-hover table-bordered table-striped text-center align-middle">
+            <thead >
                 <tr>
                     <th>ID</th>
                     <th>Nombre</th>
@@ -42,13 +43,15 @@
                     <td>{{ $zona->longitud3 }}</td>
                     <td>{{ $zona->latitud4 }}</td>
                     <td>{{ $zona->longitud4 }}</td>
-                    <td>
-                        <a class="btn btn-warning" href="{{ route('zonasRiesgo.edit', $zona->id) }}">Editar</a>
-                        <form action="{{ route('zonasRiesgo.destroy', $zona->id) }}" method="POST" style="display:inline-block;">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-danger" onclick="return confirm('¿Seguro deseas eliminar esta zona de Riesgo?')">Eliminar</button>
-                        </form>
+                    <td style="white-space: nowrap;">
+                        <div class="d-flex justify-content-center gap-2">
+                            <a class="btn btn-sm btn-warning" href="{{ route('zonasRiesgo.edit', $zona->id) }}"><i class="fas fa-edit"></i>Editar</a>
+                            <form action="{{ route('zonasRiesgo.destroy', $zona->id) }}" method="POST" onsubmit="return confirm('¿Seguro deseas eliminar esta zona de Riesgo?')" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i> Eliminar</button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
                 @endforeach
@@ -61,16 +64,22 @@
 
 <script>
     $(document).ready(function () {
-        $('#tblZnR').DataTable({
-            dom: 'Bfrtip',
-            buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
-            ],
+        new DataTable('#tblZnR', {
             language: {
-                url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
-            }
+                url: 'https://cdn.datatables.net/plug-ins/2.3.1/i18n/es-ES.json'
+            },
+            dom: "<'d-flex justify-content-between align-items-center mb-3'Bf>rtip",
+            pageLength: 5,
+            buttons: [
+                { extend: 'copy', text: 'Copiar', className: 'btn btn-primary me-2' },
+                { extend: 'csv', text: 'CSV', className: 'btn btn-info me-2' },
+                { extend: 'excel', text: 'Excel', className: 'btn btn-success me-2' },
+                { extend: 'pdf', text: 'PDF', className: 'btn btn-danger me-2' },
+                { extend: 'print', text: 'Imprimir', className: 'btn btn-secondary me-2' }
+            ]
         });
     });
 </script>
+
 <br><br><br>
 @endsection
