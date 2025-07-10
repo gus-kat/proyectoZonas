@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\zonasSeguras;
 
 use Illuminate\Http\Request;
 use App\Models\ZonasRiesgo;
@@ -13,8 +14,9 @@ class ZonaRiesgoController extends Controller
 
     public function verMapa()
     {
-        $zonas = ZonasRiesgo::all();
-        return view('zonasRiesgo.mapaZonas', compact('zonas'));
+        $zonas = ZonasRiesgo::all();           // Zonas de riesgo (polígonos)
+        $zonasSeguras = zonasSeguras::all();   // Zonas seguras (círculos)
+        return view('zonasRiesgo.mapaZonas', compact('zonas', 'zonasSeguras'));
     }
     public function index()
     {

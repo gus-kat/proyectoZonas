@@ -7,9 +7,6 @@
     <meta content="" name="keywords" />
     <meta content="" name="description" />
 
-    <!-- Google Maps API -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuXfFTd694L_jf7x67Z5kAuv4IbtHnfFs&callback=initMap"></script>
-    
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.js" crossorigin="anonymous"></script>

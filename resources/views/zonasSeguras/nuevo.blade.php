@@ -112,7 +112,7 @@
                     colorFill = "#FFB800"; // Amarillo fuerte
                     break;
                 case 'Alto':
-                    colorFill = "#FF3333"; // Rojo alerta
+                    colorFill = "#3399FF"; // Azul alerta
                     break;
                 default:
                     colorFill = "#999999"; // Neutro

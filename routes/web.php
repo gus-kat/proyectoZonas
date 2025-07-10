@@ -28,6 +28,7 @@ Route::resource('zonasRiesgo', ZonaRiesgoController::class);
 Route::get('/mapa-zonas', [ZonaRiesgoController::class, 'verMapa'])->name('zonasRiesgo.mapa');
 
 
+
 require __DIR__.'/auth.php';
 
 // Zonas seguras
