@@ -4,6 +4,7 @@
 <script>
     let zonas = @json($zonas);              // Zonas de riesgo
     let zonasSeguras = @json($zonasSeguras); // Zonas seguras
+    let puntos = @json($puntos); 
 </script>
 
 <h2 class="text-center">Mapa Global de Zonas</h2>
@@ -113,7 +114,44 @@
                 elementosGraficados.push(circulo);
             }
         });
-    }
+        puntos.forEach(p => {
+           const posicion = { lat: parseFloat(p.latitud), lng: parseFloat(p.longitud) };
+
+           const marcador = new google.maps.Marker({
+               position: posicion,
+               map: mapa,
+               title: p.nombre || 'Punto de Encuentro',
+               icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+           });
+       
+           const imagenHTML = (p.imagen && p.imagen !== 'sin imagen')
+               ? `<div style="text-align:center;">
+                      <img src="/storage/${p.imagen}" alt="Imagen" 
+                           style="width:100%; max-width:160px; height:auto; border-radius:6px; object-fit:cover;">
+                  </div>`
+               : `<p><em>Sin imagen</em></p>`;
+       
+           const contenidoInfo = `
+               <div style="max-width: 250px; font-size: 14px;">
+                   ${imagenHTML}
+                   <h6 style="margin-top: 8px; font-weight: bold;">${p.nombre}</h6>
+                   <p><strong>Capacidad:</strong> ${p.capacidad}</p>
+                   <p><strong>Responsable:</strong> ${p.responsable}</p>
+               </div>
+           `;
+       
+           const infoWindow = new google.maps.InfoWindow({
+               content: contenidoInfo
+           });
+       
+           marcador.addListener('click', () => {
+               infoWindow.open(mapa, marcador);
+           });
+       
+           elementosGraficados.push(marcador);
+        });
+
+}
 </script>
 
 <!-- Google Maps API -->

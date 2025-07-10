@@ -1,9 +1,6 @@
-@extends('layout.app')
-
+@extends('layouts.app')
 @section('contenido')
-<div class="container mt-4">
-    <a href="{{ url('puntos/mapa') }}" class="btn btn-success">Ver mapa Global</a>
-    <br>
+<div class="container mt-4"><br>
     
     <a href="{{ route('puntos.create') }}" class="btn btn-primary mb-3">
         <i class="fas fa-user-plus me-1"></i> Agregar punto

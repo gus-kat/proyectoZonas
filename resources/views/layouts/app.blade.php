@@ -116,6 +116,11 @@
         <img class="img-fluid me-3"  src="{{ asset('backend/assets/img/icon/icon-10.png') }}" alt="Icon" />
         <h1 class="m-0 text-primary">Vuelos</h1>
       </a>
+                <div class="px-3 py-2 border-end">
+              <h6 class="dropdown-header">Puntos de encuentro</h6>
+              <a href="{{ route('puntos.index') }}" class="dropdown-item">Ver puntos</a>
+              <a href="{{ route('puntos.create') }}" class="dropdown-item">Agregar punto</a>
+            </div>
       <div class="collapse navbar-collapse py-4 py-lg-0" id="navbarCollapse">
         <div class="navbar-nav ms-auto">
           <a href=" {{route ('zonasRiesgo.index')}}" style="color:blue" class="nav-item nav-link active ">Inicio</a>
@@ -132,11 +137,6 @@
               <h6 class="dropdown-header">Zonas Seguras</h6>
               <a href="{{ route('zonasSeguras.index') }}" class="dropdown-item">Ver zonas Seguras</a>
               <a href="{{ route('zonasSeguras.create') }}" class="dropdown-item">Agregar zona Seguras</a>
-            </div>
-                        <div class="px-3 py-2 border-end">
-              <h6 class="dropdown-header">Puntos de encuentro</h6>
-              <a href="{{ route('puntos.index') }}" class="dropdown-item">Ver puntos</a>
-              <a href="{{ route('puntos.create') }}" class="dropdown-item">Agregar punto</a>
             </div>
           </div>
         </div>

@@ -6,6 +6,9 @@ use App\Models\zonasSeguras;
 use Illuminate\Http\Request;
 use App\Models\ZonasRiesgo;
 
+use App\Models\Punto_Encuentro;
+
+
 class ZonaRiesgoController extends Controller
 {
     /**
@@ -16,7 +19,8 @@ class ZonaRiesgoController extends Controller
     {
         $zonas = ZonasRiesgo::all();           // Zonas de riesgo (polígonos)
         $zonasSeguras = zonasSeguras::all();   // Zonas seguras (círculos)
-        return view('zonasRiesgo.mapaZonas', compact('zonas', 'zonasSeguras'));
+        $puntos = Punto_Encuentro::all();
+        return view('zonasRiesgo.mapaZonas', compact('zonas', 'zonasSeguras','puntos'));
     }
     public function index()
     {

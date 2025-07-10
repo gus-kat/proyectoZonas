@@ -1,6 +1,4 @@
-
-@extends('layout.app')
-
+@extends('layouts.app')
 @section('contenido')
 <div class="container mt-4">
     <form action="{{ route('puntos.store') }}" id="formNpunto" method="post" enctype="multipart/form-data">

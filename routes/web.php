@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ZonaRiesgoController;
 use App\Http\Controllers\zonasSegurasController;
+use App\Http\Controllers\Punto_EncuentroController;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -33,3 +34,5 @@ require __DIR__.'/auth.php';
 
 // Zonas seguras
 Route::resource('zonasSeguras', zonasSegurasController::class);
+// PUntos de encuentro
+Route::resource('puntos',Punto_EncuentroController::class);
