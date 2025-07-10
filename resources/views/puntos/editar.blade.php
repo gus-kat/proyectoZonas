@@ -1,7 +1,9 @@
 @extends('layouts.app')
 @section('contenido')
 <br><br><br>
-<div class="container mt-4">
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6 bg-light" style="color:black">
     <form action="{{ route('puntos.update', $punto->id) }}" id="formEpuntos" method="post" enctype="multipart/form-data">
         @csrf
         @method('PUT')
@@ -60,6 +62,7 @@
             <i class="fas fa-arrow-left me-1"></i>Cancelar
         </a>
     </form>
+</div>
 </div>
 
 <script type="text/javascript">

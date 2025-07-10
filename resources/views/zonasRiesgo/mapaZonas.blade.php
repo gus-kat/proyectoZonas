@@ -9,10 +9,10 @@
 
 <h2 class="text-center">Mapa Global de Zonas</h2>
 
-<div class="d-flex justify-content-between mb-3">
+<div class="text-center">
     <div>
         <label for="nivelFiltro" class="form-label"><b>Filtrar por nivel:</b></label>
-        <select id="nivelFiltro" class="form-select" onchange="filtrarPorNivel()">
+        <select id="nivelFiltro" class="form-select-center" onchange="filtrarPorNivel()">
             <option value="todos">Todos</option>
             <option value="Bajo">Bajo</option>
             <option value="Medio">Medio</option>
@@ -20,9 +20,9 @@
         </select>
     </div>
 </div>
-
-<div id="mapa-zonas" style="height:600px; width:100%; border:2px solid blue;"></div>
-
+<div class="container"> 
+    <div id="mapa-zonas" style="height:600px; width:100%; border:2px solid blue;"></div>
+</div>
 <script>
     let mapa;
     let elementosGraficados = [];

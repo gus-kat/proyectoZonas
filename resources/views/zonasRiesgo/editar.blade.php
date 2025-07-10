@@ -7,8 +7,8 @@
 </script>
 
 <div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
+    <div class="col-md-3"></div>
+    <div class="col-md-6 bg-light" style="color:black">
         <form action="{{ route('zonasRiesgo.update', $zona->id) }}" id="frmEditarZona" method="post">
             @csrf
             @method('PUT')

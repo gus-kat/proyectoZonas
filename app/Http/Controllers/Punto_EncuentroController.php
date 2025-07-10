@@ -26,7 +26,8 @@ class Punto_EncuentroController extends Controller
      */
     public function create()
     {
-        return view("puntos.nuevo");
+         $puntos = Punto_Encuentro::all();
+        return view("puntos.nuevo",compact('puntos'));
     }
 
     /**

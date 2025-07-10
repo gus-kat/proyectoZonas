@@ -1,10 +1,12 @@
 @extends('layouts.app')
 @section('contenido')
 <br><br><br>
-<div class="container">
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6 bg-light" style="color:black">
     <h1 class="text-center">Agregar Zona Segura</h1>
 
-    <form action="{{ route('zonasSeguras.store') }}" method="POST" id="frm_nueva_zona_segura">
+    <form action="{{ route('zonasSeguras.store') }}" class="table" method="POST" id="frm_nueva_zona_segura">
         @csrf
 
         <label for="">Nombre</label><br>
@@ -55,6 +57,7 @@
             </div>
         </div>
     </div>
+</div>
 
     <script>
         let mapa;

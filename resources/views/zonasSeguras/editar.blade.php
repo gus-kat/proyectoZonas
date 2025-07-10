@@ -1,7 +1,9 @@
 @extends('layouts.app')
 @section('contenido')
 <br><br><br>
-<div class="container">
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6 bg-light" style="color:black">
     <h1 class="text-center">Editar Zona Segura</h1>
 
     <form action="{{ route('zonasSeguras.update', $zona->id) }}" method="POST">

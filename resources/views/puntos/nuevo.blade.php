@@ -1,7 +1,12 @@
 @extends('layouts.app')
 @section('contenido')
+<script>
+    let puntos = @json($puntos);
+</script>
 <br><br><br>
-<div class="container mt-4">
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6 bg-light" style="color:black">
     <form action="{{ route('puntos.store') }}" id="formNpunto" method="post" enctype="multipart/form-data">
         @csrf
         <h2 class="mb-4"><i class="fas fa-user-plus me-2"></i>Registrar Punto de encuentro</h2>
@@ -59,6 +64,7 @@
             <i class="fas fa-arrow-left me-1"></i>Cancelar
         </a>
     </form>
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -69,7 +75,6 @@
             zoom: 15,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
-
         var marcador = new google.maps.Marker({
             position: latitud_longitud,
             map: mapa,
@@ -83,6 +88,23 @@
             document.getElementById("latitud").value = latitud;
             document.getElementById("longitud").value = longitud;
         });
+        puntos.forEach(p => {
+             const pos = { lat: parseFloat(p.latitud), lng: parseFloat(p.longitud) };
+             const marcadorExistente = new google.maps.Marker({
+                 position: pos,
+                 map: mapa,
+                 title: p.nombre,
+                 icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+             });
+
+            const info = new google.maps.InfoWindow({
+                content: `<strong>${p.nombre}</strong>`
+            });
+
+            marcadorExistente.addListener('click', () => {
+                info.open(mapa, marcadorExistente);
+            });
+        });
 
         document.getElementById('btnZoomIn').addEventListener('click', () => {
             const zoomActual = mapa.getZoom();
@@ -93,9 +115,9 @@
             const zoomActual = mapa.getZoom();
             mapa.setZoom(zoomActual - 1);
         });
-
     }
 </script>
+
 <script>
     $("#formNpunto").validate({
       rules: {

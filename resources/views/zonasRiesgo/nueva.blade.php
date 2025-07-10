@@ -6,8 +6,8 @@
 </script>
 
 <div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
+    <div class="col-md-3"></div>
+    <div class="col-md-6 bg-light" style="color:black">
         <form action="{{ route('zonasRiesgo.store') }}" id="frmAgregarZona" method="post">
             @csrf
             <h3><b>Registrar Nueva Zona de Riesgo</b></h3>
