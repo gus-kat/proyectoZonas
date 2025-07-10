@@ -121,7 +121,7 @@
                position: posicion,
                map: mapa,
                title: p.nombre || 'Punto de Encuentro',
-               icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+               icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
            });
        
            const imagenHTML = (p.imagen && p.imagen !== 'sin imagen')

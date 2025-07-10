@@ -171,5 +171,6 @@
         language: 'es'
     });
   </script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuXfFTd694L_jf7x67Z5kAuv4IbtHnfFs&callback=initMap"></script>
 
 @endsection
