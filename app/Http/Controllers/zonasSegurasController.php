@@ -57,10 +57,7 @@ class zonasSegurasController extends Controller
      */
     public function edit(string $id)
     {
-        if (auth()->user()->role !== 'Administrador') {
-            return redirect()->route('zonasSeguras.index')->with('mensaje', 'No tienes permisos para editar zonas Seguras')->with('tipo', 'error');
-       
-        }
+        
          $zona = zonasSeguras::findOrFail($id);
         return view('zonasSeguras.editar', compact('zona'));
     }

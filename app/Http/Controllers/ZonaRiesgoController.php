@@ -85,10 +85,7 @@ class ZonaRiesgoController extends Controller
     public function edit(string $id)
     {
         //7
-        if (auth()->user()->role !== 'Administrador') {
-            return redirect()->route('zonasRiesgo.index')->with('mensaje', 'No tienes permisos para editar zonas de riesgo')->with('tipo', 'error');
-       
-        }
+
         $zona = ZonasRiesgo::findOrFail($id);
         return view('zonasRiesgo.editar', compact('zona'));
     }
