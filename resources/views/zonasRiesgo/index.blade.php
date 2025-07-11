@@ -46,7 +46,7 @@
                     <td style="white-space: nowrap;">
                         <div class="d-flex justify-content-center gap-2">
                             <a class="btn btn-sm btn-warning" href="{{ route('zonasRiesgo.edit', $zona->id) }}"><i class="fas fa-edit"></i>Editar</a>
-                            <form action="{{ route('zonasRiesgo.destroy', $zona->id) }}" method="POST" onsubmit="return confirm('¿Seguro deseas eliminar esta zona de Riesgo?')" style="display:inline;">
+                            <form action="{{ route('zonasRiesgo.destroy', $zona->id) }}" method="POST" class="formEliminar" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i> Eliminar</button>
@@ -80,6 +80,30 @@
         });
     });
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const formularios = document.querySelectorAll('.formEliminar');
 
+    formularios.forEach(form => {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            Swal.fire({
+                title: "¿Estás seguro?",
+                text: "Una vez eliminado no se puede recuperar",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Sí, eliminar",
+                cancelButtonText: "Cancelar"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit(); 
+                }
+            });
+        });
+    });
+});
+</script>
 <br><br><br>
 @endsection

@@ -70,6 +70,10 @@ class Punto_EncuentroController extends Controller
      */
     public function edit(string $id)
     {
+        if (auth()->user()->role !== 'Administrador') {
+            return redirect()->route('puntos.index')->with('mensaje', 'No tienes permisos para editar zonas Seguras')->with('tipo', 'error');
+       
+        }
         // Buscar punto por id
         $punto = Punto_Encuentro::findOrFail($id);
         // Retornar vista de edición pasando el punto

@@ -12,18 +12,18 @@
 
 <div class="text-center mb-4">
     <label for="nivelFiltro" class="form-label"><b>Filtrar por nivel:</b></label>
-    <select id="nivelFiltro" class="form-select-center" onchange="filtrarPorNivel()" style="max-width:250px; margin:auto;">
+    <select id="nivelFiltro" class="form-select-center mb-3" onchange="filtrarPorNivel()" style="max-width:250px; margin:auto;">
         <option value="todos">Todos</option>
         <option value="Bajo">Bajo</option>
         <option value="Medio">Medio</option>
         <option value="Alto">Alto</option>
     </select>
-</div>
 
-<div class="text-center mb-3">
-    <button class="btn btn-outline-primary me-2" onclick="imprimirImagenGenerada()">🖨 Imprimir </button>
-    <button class="btn btn-outline-danger me-2" onclick="exportarPDF()">📄 Exportar como PDF</button>
-    <button class="btn btn-outline-success" onclick="descargarImagen()">📷 Descargar Imagen</button>
+    <div class="d-flex justify-content-center gap-2 flex-wrap mb-3">
+        <button class="btn btn-outline-primary" onclick="imprimirMapa()">🖨 Imprimir</button>
+        <button class="btn btn-outline-danger" onclick="exportarPDF()">📄 Exportar como PDF</button>
+        <button class="btn btn-outline-success" onclick="descargarImagen()">📷 Descargar Imagen</button>
+    </div>
 </div>
 
 <div class="container">
@@ -188,11 +188,12 @@
         });
     }
 
-    function imprimirImagenGenerada() {
+    function imprimirMapa() {
         html2canvas(document.getElementById('mapa-zonas'), { useCORS: true }).then(canvas => {
-            const ventana = window.open('', '', 'width=800,height=600');
-            ventana.document.write('<html><head><title>Impresión del Mapa</title></head><body>');
-            ventana.document.write(`<img src="${canvas.toDataURL('image/png')}" style="width:100%;"/>`);
+            const dataUrl = canvas.toDataURL('image/png');
+            const ventana = window.open('', '', 'width=900,height=700');
+            ventana.document.write('<html><head><title>Imprimir Mapa</title></head><body style="text-align:center;">');
+            ventana.document.write(`<img src="${dataUrl}" style="max-width:100%;height:auto;">`);
             ventana.document.write('</body></html>');
             ventana.document.close();
             ventana.focus();
@@ -205,7 +206,9 @@
 <!-- Google Maps API -->
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuXfFTd694L_jf7x67Z5kAuv4IbtHnfFs&callback=initMap"></script>
 
-
 <!-- Librerías para captura y PDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<br><br><br>
+@endsection
