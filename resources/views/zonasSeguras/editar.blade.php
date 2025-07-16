@@ -6,7 +6,7 @@
     <div class="col-md-6 bg-light" style="color:black">
     <h1 class="text-center">Editar Zona Segura</h1>
 
-    <form action="{{ route('zonasSeguras.update', $zona->id) }}" method="POST">
+    <form action="{{ route('zonasSeguras.update', $zona->id) }}" method="POST" id="frm_editar_zona_segura">
         @csrf
         @method('PUT')
 
@@ -110,6 +110,59 @@
     } else {
         window.initMapZonaEditar = initMapZonaEditar;
     }
+</script>
+<script>
+    $("#frm_editar_zona_segura").validate({
+        rules: {
+                nombre: {
+                    required: true,
+                    minlength: 3
+                },
+                radio: {
+                    required: true,
+                    number: true,
+                    min: 1
+                },
+                tipo: {
+                    required: true
+                },
+                latitud: {
+                    required: true,
+                    number: true
+                },
+                longitud: {
+                    required: true,
+                    number: true
+                }
+            },
+            messages: {
+                nombre: {
+                    required: "Ingrese el nombre descriptivo",
+                    minlength: "Mínimo 3 caracteres"
+                },
+                radio: {
+                    required: "Ingrese el radio de seguridad",
+                    number: "Debe ser un número válido",
+                    min: "El radio debe ser mayor a cero"
+                },
+                tipo: {
+                    required: "Seleccione el nivel de seguridad"
+                },
+                latitud: {
+                    required: "Seleccione la ubicación en el mapa",
+                    number: "Latitud inválida"
+                },
+                longitud: {
+                    required: "Seleccione la ubicación en el mapa",
+                    number: "Longitud inválida"
+                }
+            },
+            errorClass: "is-invalid",
+            validClass: "is-valid",
+            errorPlacement: function (error, element) {
+                error.insertAfter(element);
+            }
+        });
 </script>
 
 <!-- Google Maps API -->

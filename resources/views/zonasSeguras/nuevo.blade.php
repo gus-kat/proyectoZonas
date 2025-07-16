@@ -135,6 +135,60 @@
     </script>
 
 </div>
+<script>
+    $("#frm_nueva_zona_segura").validate({
+        rules: {
+                nombre: {
+                    required: true,
+                    minlength: 3
+                },
+                radio: {
+                    required: true,
+                    number: true,
+                    min: 1
+                },
+                tipo: {
+                    required: true
+                },
+                latitud: {
+                    required: true,
+                    number: true
+                },
+                longitud: {
+                    required: true,
+                    number: true
+                }
+            },
+            messages: {
+                nombre: {
+                    required: "Ingrese el nombre descriptivo",
+                    minlength: "Mínimo 3 caracteres"
+                },
+                radio: {
+                    required: "Ingrese el radio de seguridad",
+                    number: "Debe ser un número válido",
+                    min: "El radio debe ser mayor a cero"
+                },
+                tipo: {
+                    required: "Seleccione el nivel de seguridad"
+                },
+                latitud: {
+                    required: "Seleccione la ubicación en el mapa",
+                    number: "Latitud inválida"
+                },
+                longitud: {
+                    required: "Seleccione la ubicación en el mapa",
+                    number: "Longitud inválida"
+                }
+            },
+            errorClass: "is-invalid",
+            validClass: "is-valid",
+            errorPlacement: function (error, element) {
+                error.insertAfter(element);
+            }
+        });
+</script>
+
 
 <!-- Google Maps API -->
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuXfFTd694L_jf7x67Z5kAuv4IbtHnfFs&callback=initMapZona"></script>
