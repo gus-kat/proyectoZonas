@@ -110,7 +110,7 @@
 
     <!-- Navbar Start -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top py-0 px-3 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
-      <a href="index.html" class="navbar-brand p-0">
+      <a href="{{ route('zonasRiesgo.mapa') }}" class="navbar-brand p-0">
         <img class="img-fluid me-3"  src="{{ asset('backend/assets/img/icon/icon-10.png') }}" alt="Icon" />
         <h1 class="m-0 text-primary">Zona</h1>
       </a>

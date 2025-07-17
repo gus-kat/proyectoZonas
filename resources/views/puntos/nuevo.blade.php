@@ -136,6 +136,9 @@
           minlength: 4,
           maxlength: 20
         },
+        imagen:{
+          required:true
+        },
         latitud: {
           required: true,
           number: true,
@@ -164,6 +167,9 @@
           required: "Por favor ingresa al responsable",
           minlength: "El nombre debe tener al menos 4 caracteres",
           maxlength: "El nombre no debe superar los 20 caracteres"
+        },
+        imagen:{
+          required:"Porfavor ingresar en este campo"
         },
         latitud: {
           required: "Por favor ingresa la latitud",
