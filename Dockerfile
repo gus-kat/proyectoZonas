@@ -1,25 +1,25 @@
-# Imagen base con PHP, Node, npm y Composer preinstalados
-FROM laravelsail/php82-composer
+FROM node:18-bullseye-slim
 
-# Instala yarn globalmente
+# Instala PHP y extensiones necesarias para Laravel
+RUN apt-get update && apt-get install -y \
+    php php-cli php-mbstring php-mysql php-xml php-curl php-bcmath unzip curl git \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Instala Yarn
 RUN npm install -g yarn
 
-# Instala extensiones necesarias para Laravel
-RUN docker-php-ext-install pdo pdo_mysql mbstring
-
-# Copia el código del proyecto
+# Crea carpeta de trabajo y copia archivos
 WORKDIR /var/www
 COPY . .
 
-# Instala dependencias PHP y JS, compila assets y cachea Laravel
+# Instala dependencias y compila assets
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader \
     && yarn install \
     && yarn build \
-    && php artisan optimize \
     && php artisan config:cache \
     && php artisan route:cache \
     && php artisan view:cache \
     && php artisan migrate --force
 
-# Comando por defecto al iniciar el contenedor
+# Comando por defecto al ejecutar el contenedor
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8080"]
