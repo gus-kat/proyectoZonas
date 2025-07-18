@@ -1,32 +1,25 @@
-# Usa una imagen base oficial con PHP, Composer, Node
-FROM php:8.2-fpm
+# Imagen base con PHP, Node, npm y Composer preinstalados
+FROM laravelsail/php82-composer
 
-# Instala dependencias del sistema
-RUN apt-get update && apt-get install -y \
-    curl \
-    git \
-    unzip \
-    zip \
-    nodejs \
-    npm \
-    && npm install -g yarn \
-    && docker-php-ext-install pdo pdo_mysql mbstring
+# Instala yarn globalmente
+RUN npm install -g yarn
 
-# Instala Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# Instala extensiones necesarias para Laravel
+RUN docker-php-ext-install pdo pdo_mysql mbstring
 
 # Copia el código del proyecto
-COPY . /var/www
 WORKDIR /var/www
+COPY . .
 
-# Instala dependencias de Laravel
-RUN composer install \
-    && yarn \
-    && yarn prod \
+# Instala dependencias PHP y JS, compila assets y cachea Laravel
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader \
+    && yarn install \
+    && yarn build \
     && php artisan optimize \
     && php artisan config:cache \
     && php artisan route:cache \
     && php artisan view:cache \
     && php artisan migrate --force
 
-CMD ["php-fpm"]
+# Comando por defecto al iniciar el contenedor
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8080"]
