@@ -1,6 +1,6 @@
-FROM php:8.1-fpm
+FROM php:8.2-fpm
 
-# Instalar dependencias del sistema y extensiones PHP necesarias
+# Instalar extensiones del sistema
 RUN apt-get update && apt-get install -y \
     libzip-dev zip unzip git curl libonig-dev libxml2-dev libpng-dev libjpeg-dev libfreetype6-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
@@ -9,14 +9,17 @@ RUN apt-get update && apt-get install -y \
 # Instalar Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copiar el código del proyecto
+# Establecer el directorio de trabajo
 WORKDIR /var/www/html
+
+# Copiar el código del proyecto
 COPY . .
 
-# Instalar dependencias PHP (composer)
-RUN composer install --optimize-autoloader --no-interaction
+# Instalar dependencias Laravel
+RUN composer install --optimize-autoloader --no-interaction --no-scripts
 
-# Cambiar permisos (opcional, ajusta según necesidades)
+# Permisos para Laravel
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
+# Comando de inicio
 CMD ["php-fpm"]
